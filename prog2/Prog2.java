@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.Scanner;
 
 class Entry {
 	private int tripTotal;
@@ -77,7 +78,30 @@ class Entry {
 }
 public class Prog2 {
 	public static void main(String[] args) throws IOException {
+		RandomAccessFile dataStream = null; //intialize the I/O file
+		String textname = "";
+		Scanner sc = new Scanner(args[0]); //read from the terminal command line
+		textname = sc.next();    //the file you read
 		
+		try {
+			dataStream = new RandomAccessFile(textname, "rw"); //read and write file
+		} catch (IOException e) {
+			System.out.println("I/O ERROR: Something went wrong with the " + "creation of the RandomAccessFile object.");
+			System.exit(-1);
+		}
+		
+		/*
+		 * Move the file pointer (which marks the byte with which the next
+		 * access will begin) to the front of the file (that is, to byte 0).
+		 */
+		try {
+			dataStream.seek(0);
+		} catch (IOException e) {
+			System.out.println("I/O ERROR: Seems we can't reset the file " + "pointer to the start of the file.");
+			System.exit(-1);
+		}
+		
+		RandomAccessFile bucketsStream = null;
 	}
 
 }
