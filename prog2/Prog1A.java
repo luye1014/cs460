@@ -28,11 +28,11 @@ import java.util.Scanner;
  |		And create it in the current directory.
  | 		Field types are limited to int, double, and String. All Strings field need to be padded to the needed length.
  |		For each column, all values must consume the same quantity of bytes. This is easy for numeric columns,
- |		but for String columns we don’t want to waste storage. For those columns, you need to determine the
+ |		but for String columns we dont want to waste storage. For those columns, you need to determine the
  |		number of characters in the longest value, and use that to size each value in the column for storage. This
  |		must be done for each execution of the program.
  |
- |	Techniques:  The program's steps are as follows:
+ |	Techniques:  The programs steps are as follows:
  |   	Read text file name and transfer it to binary file
  |	   	Read file line by line except reading the first line
  |     	Sort the memory by the fourth field of each line
@@ -323,10 +323,10 @@ class DataRecord implements Comparable<DataRecord> {
 
 	/*
 	 * =========================================================================
-	 * ==== dumpObject(stream) -- write the content of the object's fields to
+	 * dumpObject(stream) -- write the content of the objects fields to
 	 * the file represented by the given RandomAccessFile object reference.
-	 * Primitive types (e.g., int) are written directly. Non-fixed-size values
-	 * (e.g., strings) are converted to the maximum allowed size before being
+	 * Primitive types are written directly. Non-fixed-size values
+	 * are converted to the maximum allowed size before being
 	 * written. The result is a file of uniformly-sized records. Also note that
 	 * text is written with just one byte per character, meaning that we are not
 	 * supporting Unicode text.
@@ -404,15 +404,15 @@ class DataRecord implements Comparable<DataRecord> {
 
 	/*
 	 * =========================================================================
-	 * ==== fetchObject(stream) -- read the content of the object's fields from
+	 * fetchObject(stream) -- read the content of the objects fields from
 	 * the file represented by the given RandomAccessFile object reference,
-	 * starting at the current file position. Primitive types (e.g., int) are
+	 * starting at the current file position. Primitive types are
 	 * read directly. To create Strings containing the text, because the file
 	 * records have text stored with one byte per character, we can read a text
 	 * field into an array of bytes and use that array as a parameter to a
 	 * String constructor.
 	 * =========================================================================
-	 * ====
+	 * 
 	 */
 
 	public void fetchObject(RandomAccessFile stream) {
@@ -495,16 +495,16 @@ class DataRecord implements Comparable<DataRecord> {
 
 /*
  * Main class for Prog1A. For an input file named file.csv, name the binary file
- * file.bin. (That is, keep the file name, but change the extension.) Don’t put
- * a path on it; just create it in the current directory.) Field types are
+ * file.bin. (That is keep the file name, but change the extension.) Dont put
+ * a path on it just create it in the current directory.) Field types are
  * limited to int, double, and String. All money fields are to be doubles, and
  * pad Strings on the right with spaces to reach the needed length(s). (For
- * example, "abc ".) For each column, all values must consume the same quantity
- * of bytes. This is easy for numeric columns, but for String columns we don’t
+ * example, abc.) For each column, all values must consume the same quantity
+ * of bytes. This is easy for numeric columns, but for String columns we dont
  * want to waste storage. For those columns, you need to determine the number of
  * characters in the longest value, and use that to size each value in the
  * column for storage. This must be done for each execution of the program.
- * (Why? The data doesn’t provide field sizes, so we need to code defensively to
+ * (Why. The data doesnt provide field sizes, so we need to code defensively to
  * accommodate unexpected changes.)
  */
 public class Prog1A {
