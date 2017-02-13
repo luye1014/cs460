@@ -83,7 +83,7 @@ class bucket {
 					String temp = resultTotal.replaceAll("\\.", "");
 					if(temp.length() == s.length()){
 						//System.out.print("resultto" + resultTotal + "\n");
-						System.out.println("==>" + X.getTrip_ID() + " " +  resultTotal);
+						System.out.println(X.getTrip_ID() + " " +  resultTotal);
 						counter++;
 					}
 					//System.out.println(X.getTrip_ID() + " " +  resultTotal);
@@ -197,13 +197,9 @@ public class Prog2 {
 		}
 		for (i = 0; i < numberOfRecords; i++) {
 			X.fetchObject(dbbin);
-			//deal with -1
-//			if(X.getTrip_Total() < 0){
-//				int tmp = (int) X.getTrip_Total();
-//				total = String.valueOf(Math.abs(tmp));
-//				System.out.println(tmp);
-//			}
+
 			total = String.format("%1.2f",Math.abs(X.getTrip_Total()));
+			
 			//total = Double.toString(Math.abs(X.getTrip_Total()));
 			try {
 				bucket.insert(root, k, total, hashfile);
@@ -223,22 +219,36 @@ public class Prog2 {
 			{
 				break;
 			}
-
-			for (i = 0; i < prefix.length(); i++)// delete leading '0'
-			{
-				if(prefix.charAt(0)=='0' && prefix.charAt(i) != '0'){
-					//if(i!=prefix.length()-1){
-						hasLeading = true;
-					//}
+			
+			if(prefix.length()>3){
+				for(i = 0; i < prefix.length()-3; i++){
+					if(prefix.charAt(i)!= '0'){
+						break;
+					}
 				}
-				if (prefix.charAt(i) != '0')
-					break;
-			}
-			if (i != prefix.length()) // not all '0'
-			{
+				if(i!=0){
+					hasLeading = true;
+				}
 				prefix = prefix.substring(i);
-				
 			}
+//			for (i = 0; i < prefix.length(); i++)// delete leading '0'
+//			{
+//				if(prefix.charAt(0)=='0' && prefix.charAt(i) != '0'){
+//					//if(i!=prefix.length()-1){
+//						hasLeading = true;
+//					//}
+//				}
+//				if (prefix.charAt(i) != '0')
+//					break;
+//			}
+//			if (i != prefix.length() && prefix.length() > 3) // not all '0'
+//			{
+//				prefix = prefix.substring(i);
+//				
+//			}
+//			if( i == prefix.length() && i > 3){
+//				pre
+//			}
 			// if all '0's, just let it be
 
 			if (!valid(prefix)) {
