@@ -30,7 +30,7 @@ class bucket {
 		int k;
 		for (int i = s.length() - 1; i >= 0; i--) {
 			k = s.charAt(i);
-			if (k == '.')
+			if (k == '.') //skip dot char
 				continue;
 			k -= '0';
 			if (tmp.sub == null) {
@@ -58,8 +58,9 @@ class bucket {
 		}
 	}
 
-	private static int TraverseTree(bucket root, RandomAccessFile hashfileStream, RandomAccessFile dbStrema)
+	private static int TraverseTree(String s, bucket root, RandomAccessFile hashfileStream, RandomAccessFile dbStrema, boolean hasLeading)
 			throws IOException {
+		int counter = 0;
 		int ret = root.num;
 		if (root.file_offset != -1) {
 			int off[] = new int[BUCKETSIZE];
@@ -72,15 +73,32 @@ class bucket {
 			for (int i = 0; i < root.num; i++) {
 				dbStrema.seek(off[i]);
 				X.fetchObject(dbStrema);
+
 				NumberFormat formatter = new DecimalFormat("#0.00");
-				System.out.println(X.getTrip_ID() + " " +  formatter.format(X.getTrip_Total()));
+				String resultTotal = formatter.format(X.getTrip_Total());
+//				System.out.print("=======>" + s + "\n");
+//				System.out.print("=======>" + resultTotal + "\n");
+//				System.out.println(hasLeading+"\n");
+				if(hasLeading == true){
+					String temp = resultTotal.replaceAll("\\.", "");
+					if(temp.length() == s.length()){
+						//System.out.print("resultto" + resultTotal + "\n");
+						System.out.println("==>" + X.getTrip_ID() + " " +  resultTotal);
+						counter++;
+					}
+					//System.out.println(X.getTrip_ID() + " " +  resultTotal);
+				}else{
+					System.out.println(X.getTrip_ID() + " " +  resultTotal);
+					counter++;
+				}
 			}
+			return counter;
 		}
 
 		if (root.sub != null) {
 			for (int i = 0; i < 10; i++) {
 				if (root.sub[i] != null) {
-					ret += TraverseTree(root.sub[i], hashfileStream, dbStrema);
+					ret += TraverseTree(s, root.sub[i], hashfileStream, dbStrema, hasLeading);
 				}
 			}
 		}
@@ -89,12 +107,12 @@ class bucket {
 	}
 
 	// return the total number
-	public static int query(bucket root, String s, RandomAccessFile hashfileStream, RandomAccessFile dbStrema)
+	public static int query(bucket root, String s, RandomAccessFile hashfileStream, RandomAccessFile dbStrema, boolean hasLeading)
 			throws IOException {
 
 		bucket tmp = root;
 		for (int i = s.length() - 1; i >= 0; i--) {
-			int k = s.charAt(i) - '0';
+			int k = s.charAt(i) - '0'; //change char to int
 			if (tmp.sub == null) {
 				return 0;
 			}
@@ -104,13 +122,19 @@ class bucket {
 			tmp = tmp.sub[k];
 		}
 
-		return TraverseTree(tmp, hashfileStream, dbStrema);
+		return TraverseTree(s, tmp, hashfileStream, dbStrema, hasLeading);
 
 	}
 };
 
 public class Prog2 {
-
+	/**
+	 * private static boolean valid(String X) 
+	 * This is the method for checking whether the input is digit or not
+	 * return true if it is a valid input otherwise return false
+	 * @param X
+	 * @return
+	 */
 	private static boolean valid(String X) {
 		int i;
 		char ch;
@@ -133,6 +157,7 @@ public class Prog2 {
 		String total;
 		int query_num = 0;
 		Scanner keyboard = new Scanner(System.in);
+		boolean hasLeading = false;
 		try {
 			dbbin = new RandomAccessFile(args[0], "r");
 		} catch (FileNotFoundException e) {
@@ -172,12 +197,13 @@ public class Prog2 {
 		}
 		for (i = 0; i < numberOfRecords; i++) {
 			X.fetchObject(dbbin);
-			//System.out.println(X.getTrip_Total());
-			//double temp = Double.valueOf(field[14]);
-			//NumberFormat formatter = new DecimalFormat("#.##");
+			//deal with -1
+//			if(X.getTrip_Total() < 0){
+//				int tmp = (int) X.getTrip_Total();
+//				total = String.valueOf(Math.abs(tmp));
+//				System.out.println(tmp);
+//			}
 			total = String.format("%1.2f",Math.abs(X.getTrip_Total()));
-			//total = changed;
-			//System.out.println(total);
 			//total = Double.toString(Math.abs(X.getTrip_Total()));
 			try {
 				bucket.insert(root, k, total, hashfile);
@@ -192,16 +218,26 @@ public class Prog2 {
 			System.out.print("please input one prefix to query,input 'quit' or 'q' to exit: ");
 			prefix = keyboard.next();
 			prefix = prefix.trim();
-			if (prefix.equals("quit")||prefix.equals("q"))
+			hasLeading = false;
+			if (prefix.equals("quit")||prefix.equals("q")) //if users input quit then quit the program
+			{
 				break;
+			}
+
 			for (i = 0; i < prefix.length(); i++)// delete leading '0'
 			{
+				if(prefix.charAt(0)=='0' && prefix.charAt(i) != '0'){
+					//if(i!=prefix.length()-1){
+						hasLeading = true;
+					//}
+				}
 				if (prefix.charAt(i) != '0')
 					break;
 			}
 			if (i != prefix.length()) // not all '0'
 			{
 				prefix = prefix.substring(i);
+				
 			}
 			// if all '0's, just let it be
 
@@ -211,7 +247,7 @@ public class Prog2 {
 			}
 
 			try {
-				query_num = bucket.query(root, prefix, hashfile, dbbin);
+				query_num = bucket.query(root, prefix, hashfile, dbbin, hasLeading);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
