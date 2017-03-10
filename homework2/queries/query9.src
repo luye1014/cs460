@@ -1,0 +1,2 @@
+## Query9 ##
+display(project(join(department)(project(select(select(dependent)(relationship='Spouse'))(sex='F'))(essn))(department.mgrssn=essn))(dname))

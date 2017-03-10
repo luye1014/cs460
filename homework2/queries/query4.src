@@ -1,0 +1,2 @@
+## Query4 ##
+display(project(select(select((department)product(dept_locations))(dname='Research'))(dnumber=d#))(dlocation))

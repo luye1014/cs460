@@ -1,0 +1,2 @@
+## Query10 ##
+display(project(select(join(project((project(select(employee)(sex='M'))(ssn))intersect(project(select(dependent)(sex='M'))(essn)))(essn))(dependent)(dependent.essn=essn))(sex='M'))(dependent_name))

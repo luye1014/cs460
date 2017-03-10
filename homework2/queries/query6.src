@@ -1,0 +1,2 @@
+## Query6 ##
+display(project(join(project(select(dependent)(dependent_name='Alice'))(essn))(department)(department.mgrssn=essn))(dname))

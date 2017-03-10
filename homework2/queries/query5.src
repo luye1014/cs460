@@ -1,0 +1,2 @@
+## Query5 ##
+display(project(join(dept_locations)(project(select(department)(dname='Research'))(dnumber))(dnumber=dept_locations.d#))(dlocation))

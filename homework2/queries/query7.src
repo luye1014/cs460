@@ -1,0 +1,2 @@
+## Query7 ##
+display((project(join(project(select(employee)(dno='5'))(superssn))(employee)(employee.ssn=superssn))(ssn))union(project(select(employee)(dno='5'))(ssn)))

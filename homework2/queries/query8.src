@@ -1,0 +1,2 @@
+## Query8 ##
+display(project(join(employee)(project(join(department)(project(select(proposal)(plocation='Stafford'))(dnum))(department.dnumber=dnum))(mgrssn))(mgrssn=employee.ssn))(bdate))

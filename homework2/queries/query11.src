@@ -1,0 +1,2 @@
+## Query11 ##
+display(project(select(join(employee)((project(works_on)(empssn))difference(project(join(works_on)(project(select(proposal)(pname='ProductY'))(pnumber))(pnumber=works_on.pno))(empssn)))(empssn=employee.ssn))(dno='5'))(salary))

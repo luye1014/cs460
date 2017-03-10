@@ -1,0 +1,2 @@
+## Query1 ##
+display(project(select(employee)(dno='5'))(fname,minit,lname,ssn,bdate,address,sex,salary,superssn,dno))

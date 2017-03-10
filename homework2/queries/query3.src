@@ -1,0 +1,2 @@
+## Query3 ##
+display((project(employee)(fname))product(project(dependent)(dependent_name)))

@@ -1,0 +1,10 @@
+## Query12 ##
+a=project(employee)(sex,dno)
+b=project(employee)(sex)
+dn=project(a)(dno)
+pro=(b)product(dn)
+dif=(pro)difference(a)
+se=project(dif)(dno)
+c=(dn)difference(se)
+jo=join(c)(department)(c.dno=department.dnumber)
+display(project(jo)(dname))

@@ -1,0 +1,2 @@
+## Query2 ##
+display(project(join(employee)(project(select(works_on)(pno='10'))(empssn))(empssn=employee.ssn))(ssn))
