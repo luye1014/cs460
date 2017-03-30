@@ -1,0 +1,104 @@
+//import java.io.BufferedReader;
+//import java.io.FileNotFoundException;
+//import java.io.FileReader;
+//import java.io.IOException;
+//
+//public class csvReader{
+//    public static void main(String[] args) {
+//        String csvFile = "/Users/kanoutsuyu/Desktop/cs460_proj3/csv/test.csv";
+//        BufferedReader br = null;
+//        String line = "";
+//        String cvsSplitBy = ",";
+//        
+//        try {
+//            br = new BufferedReader(new FileReader(csvFile));
+//            while ((line = br.readLine()) != null) {
+//                // use comma as separator
+//                String[] colume = line.split(cvsSplitBy);
+//                
+//                for(int i = 0; i < 28; i++){
+//                	if(colume[i]=="*"){
+//                		//replace it to null
+//                	}
+//                	if(colume[i]==""){
+//                		//remove that line;
+//                	}
+//                }
+//            }
+//
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } finally {
+//            if (br != null) {
+//                try {
+//                    br.close();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+//    }
+//}
+
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+
+
+public class scrubData{
+
+
+    public static void main(String[] args) throws IOException
+    {
+        File inputFile = new File("/Users/kanoutsuyu/Desktop/cs460_proj3/csv/test.csv");
+        File tempFile = new File("/Users/kanoutsuyu/Desktop/cs460_proj3/csv/gettest.csv");
+
+        BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+        BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
+
+        String currentLine;
+        
+        
+//        br = new BufferedReader(new FileReader(csvFile));
+//      while ((line = br.readLine()) != null) {
+//          // use comma as separator
+//          String[] colume = line.split(cvsSplitBy);
+//          
+//          for(int i = 0; i < 28; i++){
+//          	if(colume[i]=="*"){
+//          		//replace it to null
+//          	}
+//          	if(colume[i]==""){
+//          		//remove that line;
+//          	}
+//          }
+
+        while((currentLine = reader.readLine()) != null) {
+        	String[] colume = currentLine.split(",");
+        	for(int i = 0; i < 28; i++){
+		      	if(colume[i]=="*"){
+		      		//replace it to null
+		      	}
+		      	if(colume[i]==""){
+		      		//remove that line;
+		      	}
+		      }
+
+            if(null!=currentLine && !currentLine.equalsIgnoreCase("BBB")){
+                writer.write(currentLine + System.getProperty("line.separator"));
+            }
+        }
+        writer.close(); 
+        reader.close(); 
+        boolean successful = tempFile.renameTo(inputFile);
+        System.out.println(successful);
+    }
+
+}

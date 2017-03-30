@@ -1,0 +1,44 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class scrubData{
+    public static void main(String[] args) throws IOException{
+        File inputFile = new File("/Users/kanoutsuyu/Desktop/cs460_proj3/csv/test.csv");
+        File tempFile = new File("/Users/kanoutsuyu/Desktop/cs460_proj3/csv/gettest.csv");
+
+        BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+        BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
+
+        String currentLine;
+      
+        int counter = 0, counterStar=0;
+        while((currentLine = reader.readLine()) != null) {
+        	String[] field = currentLine.split(",",29);
+        	for(int i = 0; i < 28; i++){
+//        		System.out.println("field " +i +"is: [" + field[i] + "]");
+		      	if(field[i].matches("\\*")){
+		      		System.out.println("detect asterisk");
+		      		field[i] = field[i].replaceAll("\\*", "NULL");
+		      		System.out.println(field[i]);
+		      	
+		      	}
+		      	if(field[i].isEmpty()){//remove that line;
+		      		counter++;
+		      	}
+		    }
+        	if(null!=currentLine && counter==0){
+        		writer.write(currentLine);
+        		writer.write("\n");
+//        		System.out.println(counterStar);
+        	}
+        	counter=0;
+        }
+        writer.close(); 
+        reader.close(); 
+    }
+
+}
