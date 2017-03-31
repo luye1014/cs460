@@ -8,8 +8,8 @@ import java.util.ArrayList;
 
 public class scrubData{
     public static void main(String[] args) throws IOException{
-        File inputFile = new File("/Users/kanoutsuyu/Desktop/cs460_proj3/csv/aims-and-aimsa-2014.csv");
-        File tempFile = new File("/Users/kanoutsuyu/Desktop/cs460_proj3/csv/2014.csv");
+        File inputFile = new File("/Users/kanoutsuyu/Desktop/cs460_proj3/csv/aims_and_aimsa_2010.csv");
+        File tempFile = new File("/Users/kanoutsuyu/Desktop/cs460_proj3/csv/2010.csv");
 
         BufferedReader reader = new BufferedReader(new FileReader(inputFile));
         BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
@@ -34,7 +34,6 @@ public class scrubData{
         	String formattedR = records.toString()
         		    .replace("[", "")  //remove the right bracket
         		    .replace("]", "")  //remove the left bracket
-        		    .replace(", ", ",")
         		    .trim(); 
         	if(null!=currentLine && counter==0){
         		writer.write(formattedR);
