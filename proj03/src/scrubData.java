@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class scrubData{
     public static void main(String[] args) throws IOException{
-        File inputFile = new File("/Users/kanoutsuyu/Desktop/cs460_proj3/csv/aims-and-aimsa-2014.csv");
+        File inputFile = new File("/Users/kanoutsuyu/Desktop/cs460_proj3/csv/aims_and_aimsa_2014.csv");
         File tempFile = new File("/Users/kanoutsuyu/Desktop/cs460_proj3/csv/2014.csv");
 
         BufferedReader reader = new BufferedReader(new FileReader(inputFile));
@@ -18,8 +18,8 @@ public class scrubData{
         int counter = 0;
         ArrayList<String> records = new ArrayList<String>(); // store
         while((currentLine = reader.readLine()) != null) {
-        	String[] field = currentLine.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)",29);
-        	for(int i = 0; i < 28; i++){
+        	String[] field = currentLine.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)",35);
+        	for(int i = 0; i < 34; i++){
 		      	if(field[i].matches("\\*")){
 //		      		System.out.println("detect asterisk");
 		      		field[i] = field[i].replaceAll("\\*", "NULL");
