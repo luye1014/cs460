@@ -1,0 +1,110 @@
+import java.io.*;
+import java.sql.*; // For access to the SQL interaction methods
+import java.util.Scanner;
+
+public class prog3 {
+    private int Fiscal_Year;
+    private String State;//	State varchar(7),
+    private String Country;//	County varchar(7),
+    private String Country;//	LEA_EntityID integer,
+    private String Country;//	LEA_CTDSnum integer,
+    private String Country;//	LEA_Name varchar(80),
+    private String Country;//	School_EntityID integer,
+    private String Country;//	School_CTDSnum integer,
+    private String Country;//	School_Name varchar(69),
+    private String Country;//	S_charter varchar(1),
+    private String Country;//	Math_mean integer,
+    private String Country;//	Math_PercFallsFarBelow integer,
+    private String Country;//	Math_PercApproaches integer,
+    private String Country;//	Math_PercMeets integer,
+    private String Country;//	Math_PercExceeds integer,
+    private String Country;//	Math_PercPassing integer,
+    private String Country;//	Reading_mean integer,
+    private String Country;//	Reading_PercFallsFarBelow integer,
+    private String Country;//	Reading_PercApproaches integer,
+    private String Country;//	Reading_PercMeets integer,
+    private String Country;//	Reading_PercExceeds integer,
+    private String Country;//	Reading_PercPassing integer,
+    private String Country;//	Writing_mean integer,
+    private String Country;//	Writing_PercFallsFarBelow integer,
+    private String Country;//	Writing_PercApproaches integer,
+    private String Country;//	Writing_PercMeets integer,
+    private String Country;//	Writing_PercExceeds integer,
+    private String Country;//	Writing_PercPassing integer,
+    private String Country;//	Science_mean integer,
+    private String Country;//	Science_PercFallsFarBelow integer,
+    private String Country;//	Science_PercApproaches integer,
+    private String Country;//	Science_PercMeets integer,
+    private String Country;//	Science_PercExceeds integer,
+    private String Country;//	Science_PercPassing integer,
+    private String Country;//	primary key (School_EntityID)
+
+    public static void main(String[] args) throws SQLException, IOException {
+
+        final String oracleURL = // Magic lectura -> aloe access spell
+                "jdbc:oracle:thin:@aloe.cs.arizona.edu:1521:oracle";
+
+        String username = null, // Oracle DBMS username
+                password = null; // Oracle DBMS password
+
+        if (args.length == 2) { // get username/password from cmd line args
+            username = args[0];
+            password = args[1];
+        } else {
+            System.out.println("\nUsage:  java JDBC <username> <password>\n"
+                    + "    where <username> is your Oracle DBMS" + " username,\n    and <password> is your Oracle"
+                    + " password (not your system password).\n");
+            System.exit(-1);
+        }
+
+        // load the (Oracle) JDBC driver by initializing its base
+        // class, 'oracle.jdbc.OracleDriver'.
+        try {
+            Class.forName("oracle.jdbc.OracleDriver");
+
+        } catch (ClassNotFoundException e) {
+            System.err.println("*** ClassNotFoundException:  " + "Error loading Oracle JDBC driver.  \n"
+                    + "\tPerhaps the driver is not on the Classpath?");
+            System.exit(-1);
+
+        }
+
+        // make and return a database connection to the user's
+        // Oracle database
+
+        Connection dbconn = null;
+        try {
+            dbconn = DriverManager.getConnection(oracleURL, username, password);
+        } catch (SQLException e) {
+            System.err.println("*** SQLException:  " + "Could not open JDBC connection.");
+            System.err.println("\tMessage:   " + e.getMessage());
+            System.err.println("\tSQLState:  " + e.getSQLState());
+            System.err.println("\tErrorCode: " + e.getErrorCode());
+            System.exit(-1);
+        }
+        
+
+        // Send the query to the DBMS, and get and display the results
+        Statement stmt = null;
+        stmt = dbconn.createStatement();
+
+        File inputFile = new File("/Users/kanoutsuyu/Desktop/cs460_proj3/csv/aims_and_aimsa_2014.csv");
+        BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+        
+        String currentLine;
+        while((currentLine = reader.readLine()) != null) {
+        	String[] field = currentLine.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)",34);
+        	for(int i = 0; i < 34; i++){
+        		= field[0];
+        	}
+            String query = "INSERT INTO AIMS2010 VALUES (" + ")";
+            stmt.executeQuery(query);
+        }
+        
+
+
+  
+    }
+}
+
+
