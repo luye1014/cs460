@@ -51,43 +51,81 @@ public class prog3 {
 		}
 
 		// Send the query to the DBMS, and get and display the results
-		Statement stmt = null;
-		stmt = dbconn.createStatement();
-
-		File inputFile = new File("2010.csv");
-		BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-		String currentLine;
-		while ((currentLine = reader.readLine()) != null) {
-		currentLine = reader.readLine();
-			String[] field = currentLine.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)", 35);
-			for (int i = 0; i < 34; i++) {
-				System.out.println(i+ " "+ field[i]);
+		String mainQuery = "Main menu: Please Type q1, q2, q3 or q4 for specific query.\n You can input quit to end.";
+		Scanner keyboard = new Scanner(System.in); // your input
+		boolean working = true;
+		while(working){
+			System.out.println(mainQuery);
+			switch(keyboard.next()){
+			case "q1":
+				//to do case 1 for query 1
+				System.out.println("How many High Schools are listed in the results? Choose a year from 2010 to 2014.\n"
+						+ "Or you can input quit1 and go back to main menu.");
+				while(keyboard.hasNext()){
+					String year = keyboard.next();
+					System.out.println(year);
+					if(year.equals("quit1")){
+						break;
+					}
+					if(year.equals("2010")||year.equals("2011")||year.equals("2012")
+							||year.equals("2013")||year.equals("2014")){
+						Query1(dbconn,year);
+					}
+					else{
+						System.out.println("You input a wrong year or wrong command. Please reinput or Input quit1 to end query q1.");
+					}
+				}
+				break;
+			case "q2":
+				//to do case 2 for query 2
+				System.out.println("For each of the five years, display the num of charter schools and how many of"
+						+ "them had a sum of the Math percentages \"Falls Far Below\" and \"Approaches\" that was"
+						+ "less than the percent \"Passing\"\n"
+						+ "You can quit2 to end query Q2.");	
+				break;
+			case "q3":
+				//to do case 3 for query 3
+				System.out.println("instruction for query 3");
+				Query3();
+				break;
+			case "q4":
+				//to do case 4 for query 4
+				System.out.println("instruction for query4");
+				Query4();
+				break;
+			case "quit":
+				working = false;
+				break;
+			default:
+				System.out.println("You insert wrong command, follow the instruction. \n"
+						+ "Please Type q1, q2, q3 or q4 for specific query.\n Or input quit to end.");
 			}
-				
-			String query = "INSERT INTO AIMS2010 VALUES (" + field[0] + "," +
-				"q'[" +field[1]+ "]'" + "," +
-				"q'[" +field[2]+ "]'" + "," +
-				field[3] + "," + field[4] + "," + 
-				"q'[" +field[5]+ "]'" + "," +
-				field[6]+ "," + field[7]+ "," + 
-				"q'[" +field[8]+ "]'" + "," +
-				"q'[" +field[9]+ "]'" + "," +
-				field[10]+ "," + field[11]+ "," +
-				field[12]+ "," + field[13]+ "," + 
-				field[14]+ "," + field[15]+ "," + 
-				field[16]+ "," + field[17]+ "," +
-				field[18]+ "," + field[19]+ "," + 
-				field[20]+ "," + field[21]+ "," + 
-				field[22]+ "," + field[23]+ "," +
-				field[24]+ "," + field[25]+ "," + 
-				field[26]+ "," + field[27]+ "," + 
-				field[28]+ "," + field[29]+ "," +
-				field[30]+ "," + field[31]+ "," + 
-				field[32]+ "," + field[33]+ ");";
-	
-			stmt.executeQuery(query);
 		}
-		System.out.println("import success");
 
+	}
+
+	private static void Query4() {
+		System.out.println("run query4  " );
+		
+	}
+
+	private static void Query3() {
+		System.out.println("run query3  " );
+		
+	}
+
+	private static void Query2() {
+		System.out.println("run query2  " );
+		
+	}
+
+	private static void Query1(Connection dbconn, String year) {
+		System.out.println("run query1  " + year);
+//		select distinct School_name from AIMS2010 
+//		where School_name like '%High_School%'
+//		and School_name not like '%Junior%'
+//		and School_name not like '%Jr%';
+		
+		
 	}
 }
