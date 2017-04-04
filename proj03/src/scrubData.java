@@ -20,14 +20,15 @@ public class scrubData{
         while((currentLine = reader.readLine()) != null) {
         	String[] field = currentLine.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)",35);
         	for(int i = 0; i < 34; i++){
-		      	if(field[i].matches("\\*")){
-//		      		System.out.println("detect asterisk");
-		      		field[i] = field[i].replaceAll("\\*", "NULL");
-//		      		System.out.println(field[i]);
-		      	
-		      	}
 		      	if(field[i].isEmpty()){//remove that line;
 		      		counter++;
+		      	}
+		      	
+		      	if(field[i].matches("\\*")){
+//		      		System.out.println("detect asterisk");
+		      		field[i] = field[i].replaceAll("\\*", "-1");
+//		      		System.out.println(field[i]);
+		      	
 		      	}
 		      	records.add(field[i]);
 		    }
