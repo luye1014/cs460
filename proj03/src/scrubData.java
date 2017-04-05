@@ -10,6 +10,7 @@ public class scrubData{
     public static void main(String[] args) throws IOException{
         File inputFile = new File("/Users/kanoutsuyu/Desktop/cs460_proj3/csv/aims_and_aimsa_2014.csv");
         File tempFile = new File("/Users/kanoutsuyu/Desktop/cs460_proj3/csv/2014.csv");
+       
 
         BufferedReader reader = new BufferedReader(new FileReader(inputFile));
         BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
