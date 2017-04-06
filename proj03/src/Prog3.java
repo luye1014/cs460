@@ -183,10 +183,9 @@ public class Prog3 {
 			case "q4":// Send the query to the DBMS, and get and display the
 						// results for query4
 				// to do case 4 for query 4
-				System.out.println("Choose whether a Charter School or not (Input Y or N, both Capital), "
-						+ "For School Entity ID in 2014, which school's sum of Writing mean percentage and "
-						+ "Reading mean percentage is greater than sum of Science "
-						+ "mean percentage and Math mean percentage?");
+				System.out.println("Choose whether a Charter School or not (Input Y or N, both Capital), to "
+						+ "see how many school had an increased trend on Reading passing percentage for"
+						+ "these three years(from 2010 to 2012).");
 				while (keyboard.hasNext()) {// check the keyboard scanner
 					String YorN = keyboard.next();
 					if (YorN.equals("quit4")) {
@@ -233,37 +232,36 @@ public class Prog3 {
 		ResultSet answer = null;
 		try {
 			// the query you gonna to query for this function
-			String query = "select School_Name, School_EntityID from (select School_Name, School_EntityID, "
-					+ "Math_mean+Science_mean as sum from luye.AIMS2014 where Math_mean > 0 and Science_mean > 0 and S_charter "
-					+ "= '" + yorN + "' and County = 'Pima' order by sum desc) where rownum <=10";
+			int counter = 0;
+			String query = "select School_EntityID " + "from("
+					+ "select luye.AIMS2010.School_EntityID, luye.AIMS2010.Reading_PercPassing as Passing2010, "
+					+ "luye.AIMS2011.Reading_PercPassing as Passing2011, luye.AIMS2012.Reading_PercPassing as Passing2012 "
+					+ "from luye.AIMS2010 left join luye.AIMS2011 on luye.AIMS2010.School_EntityID = luye.AIMS2011.School_EntityID"
+					+ " left join luye.AIMS2012 on luye.AIMS2010.School_EntityID = luye.AIMS2012.School_EntityID "
+					+ "where luye.AIMS2010.Reading_PercPassing > 0 and luye.AIMS2011.Reading_PercPassing > 0 "
+					+ "and luye.AIMS2012.Reading_PercPassing > 0 and luye.AIMS2010.S_charter='" + yorN
+					+ "' and luye.AIMS2011.S_charter='" + yorN + "' and luye.AIMS2012.S_charter='" + yorN + "') "
+					+ "where Passing2010 < Passing2011 and Passing2011 < Passing2012";
 
 			stmt = dbconn.createStatement();
 			answer = stmt.executeQuery(query);
-
+			//answer.getInt("School_EntityID");
 			if (answer != null) {
-				// Get the data about the query result to learn
-				// the attribute names and use them as column headers
-				ResultSetMetaData answermetadata = answer.getMetaData();
-				for (int i = 1; i <= answermetadata.getColumnCount(); i++) {
-					System.out.print(answermetadata.getColumnName(i) + "\t\t\t\t");
-				}
-				// fomatting
-				System.out.println();
-				System.out.println("---------------------------------------------------------------------------");
-				// Use next() to advance cursor through the result
-				// tuples and print their attribute values
 				while (answer.next()) {
-					// fomatting the school name
-					String sname = answer.getString("School_Name");
-					int maxL = 60; // limit its maximum length is 60
-					for (int i = sname.length(); i <= maxL; i++) {
-						sname += " ";
-					}
-					// print school entityid and its name
-					System.out.println(sname + "\t\t" + answer.getInt("School_EntityID"));
+					//System.out.println(answer.getInt("School_EntityID"));
+					counter++;
 				}
 			}
-			System.out.println();
+			//System.out.println(yorN);
+			if(yorN.equals("Y")){
+				System.out.println("From year 2010 to year 2012, there are " + counter + " Chater Schools "
+						+ "got an increasing trend on Reading Passing Percentage.");
+			}
+			if(yorN.equals("N")){
+				System.out.println("From year 2010 to year 2012, there are " + counter + " Non Chater Schools "
+						+ "got an increasing trend on Reading Passing Percentage.");
+			}
+			
 
 		} catch (SQLException e) {// catch the exception
 			System.err.println("*** SQLException:  " + "Could not fetch query results.");
@@ -271,9 +269,7 @@ public class Prog3 {
 			System.err.println("\tSQLState:  " + e.getSQLState());
 			System.err.println("\tErrorCode: " + e.getErrorCode());
 			System.exit(-1);
-
 		}
-
 	}
 
 	/*
@@ -445,15 +441,9 @@ public class Prog3 {
 	 * =========================================================================
 	 * Function name: private static void Query1(Connection dbconn, String yorN)
 	 * { | Description: This is a simple help method to help you query the first
-	 * question | which is asking you How many High Schools are listed in the
-	 * results? Choose a year from | 2010 to 2014 by user. | Or you can input
-	 * quit1 and go back to main menu. | Embedding SQL within another
-	 * programming language is nice for applications that require more | complex
-	 * calculations or manipulations than plain SQL can handle. Many DBMSes have
-	 * add-ons that can be | used for developing nice applications, but even
-	 * they may not be flexible enough to create the application you | have in
-	 * mind. | | What should I emphasized here is The definition for Junior High
-	 * School here | is any name contains \"Junior High School\"."
+	 * question | which is asking you Choose whether a Charter School or not
+	 * (Input Y or N, both Capital), to see which school have a increased trend
+	 * on Reading passing percentage for these five years(from 2010 to 2015)
 	 * =========================================================================
 	 * 
 	 */
